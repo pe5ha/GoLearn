@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main">
+
+
+    <include
+        layout="@layout/settings_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88949A94">
+
+
+        <RelativeLayout
+            android:id="@+id/board_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/board_texture"
+                android:layout_width="match_parent"
+                android:layout_height="406dp"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/board_texture_8" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/board_texture"
+                android:gravity="center_horizontal"
+                android:text="A\t\t\t\t B\t\t\t\t C\t\t\t\t D\t\t\t\t E\t\t\t\t F\t\t\t\t G\t\t\t\t H\t\t\t\t J"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/board_texture"
+                android:gravity="center_horizontal"
+                android:text="A\t\t\t\t B\t\t\t\t C\t\t\t\t D\t\t\t\t E\t\t\t\t F\t\t\t\t G\t\t\t\t H\t\t\t\t J"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/board_texture"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:text="\n9\n\n8\n\n7\n\n6\n\n5\n\n4\n\n3\n\n2\n\n1\n"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@id/board_texture"
+                android:layout_centerVertical="true"
+
+                android:text="\n9\n\n8\n\n7\n\n6\n\n5\n\n4\n\n3\n\n2\n\n1\n"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/board"
+                android:layout_width="360dp"
+                android:layout_height="360dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/board9x9" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/lesson_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/board_layout"
+
+            android:gravity="center_horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/lesson_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/lesson0_text0"
+                android:textColor="@color/colorTextBlack"
+                android:textSize="20sp"
+
+                android:textStyle="normal" />
+
+            <Button
+                android:id="@+id/lessonNextBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lesson_text"
+                android:layout_marginTop="10dp"
+                android:text="@string/lessonNextBtnText"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/lessonRetryBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lesson_text"
+                android:layout_marginTop="10dp"
+                android:text="@string/lessonRetryBtnText"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
