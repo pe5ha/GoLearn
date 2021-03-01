@@ -2,6 +2,7 @@ package ru.johnlayming.goboard;
 
 import java.util.ArrayList;
 
+
 public class GameState {
 
     public int size;
