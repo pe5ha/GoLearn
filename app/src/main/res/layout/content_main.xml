@@ -30,16 +30,17 @@
         <LinearLayout
             android:id="@+id/game_btn_layout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/passBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Пас" />
+                android:text="Пас"
+                tools:visibility="visible" />
 
             <Button
                 android:id="@+id/returnBtn"
@@ -128,6 +129,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/lessonRetryBtnText"
                         android:visibility="gone" />
+
                 </LinearLayout>
             </ScrollView>
 

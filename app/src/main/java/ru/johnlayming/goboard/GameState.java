@@ -10,7 +10,7 @@ public class GameState {
     public int turn; // count turn
     public int whoseTurn;
     public int opponent;
-    public int typeofLastMove; // 0 - move, 1 - pass, -1 - suicide, -2 - rule Ko, -3 - resign
+    public int typeofLastMove; // 0 - move, 1 - pass, 2 - return, -1 - suicide, -2 - rule Ko, -3 - resign
     public int[] ko;
     public int koTurn;
     public boolean koRule;
@@ -190,6 +190,15 @@ public class GameState {
         typeofLastMove=0;
 
     }
+    public void returnMove(){
+        board[lastMoveY][lastMoveX] = 0;
+        gameUI.removeStone(lastMoveX,lastMoveY);
+        turn--;
+        whoseTurn = whoseTurn == 1 ? 2 : 1;
+        opponent = opponent == 1 ? 2 : 1;
+        typeofLastMove=2; // return
+    }
+
 
     public void pass(){
         if(typeofLastMove==1){ // два паса, конец игры подсчет очков

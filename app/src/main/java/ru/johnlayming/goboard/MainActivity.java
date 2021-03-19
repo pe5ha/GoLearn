@@ -30,9 +30,17 @@ import android.widget.Toast;
 . доделать адеватно обучение
 . доделать адекватно игру с другом
 . сделать онлайн игру с другом
-. приятные мелочи
+. приятные мелочи:
+    звук
+    задержка ответа бота
 
  */
+/* Не сделано
+*  пас не сделан в движке, только в обучении работает как кнопка
+*  сохранения обучения не сделаны в обучении
+*  сохранения не сделаны игры в движке
+*  endgame
+* */
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -101,11 +109,14 @@ private String boardTexture;
             game.clear();
 
         }
+        /* пока что убрал задачи пока они не работают
         else if(id==R.id.nav_problem){
 
             game.clear();
             Problems P=new Problems(this,game);
         }
+
+         */
         else if(id==R.id.nav_settings){
             findViewById(R.id.info_layout).setVisibility(View.GONE);
             findViewById(R.id.main_layout).setVisibility(View.GONE);

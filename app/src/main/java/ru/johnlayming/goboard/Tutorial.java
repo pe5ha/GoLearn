@@ -23,9 +23,12 @@ public class Tutorial {
     private Button nextBtn;
     private Button retryBtn;
 
+    private Button passBtn;
+    private Button returnBtn;
+
     private TextView tip;
     private LinearLayout tutorialLayout;
-    private boolean waitForNext=false;
+    private boolean waitForNext=false; // для появления кнопки next
 
 
 
@@ -56,16 +59,32 @@ public class Tutorial {
                 nextStep();
             }
         });
+        passBtn=activity.findViewById(R.id.passBtn);
+        passBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stepComplete();
+            }
+        });
+        returnBtn=activity.findViewById(R.id.returnBtn);
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                GS.returnMove();
+            }
+        });
         tip = activity.findViewById(R.id.lesson_text);
-
-
 
         progress= new int[]{0, 0}; // progress[0] - lessons, progress[1] - in lesson progress
         // загрузить урок и прогресс из файла
-
-        numbStepsInLesson = new int[]{1,8,4,1};
+        //progress[0]=3;
+        numbStepsInLesson = new int[]{1,8,4,1}; //количество шагов в каждом из уроков (разделов)
         sgf = new SgfWorker();
         if(progress[0]+progress[1]>0) sgf.loadBoardStateFromSgf(activity,"lesson"+progress[0]+"_state"+progress[1]+".sgf",GS);
+        tip.setText(activity.getResources().getIdentifier("lesson" + progress[0] + "_text" + progress[1], "string", activity.getPackageName()));
+        nextBtn.setVisibility(View.GONE);
+        retryBtn.setVisibility(View.GONE);
     }
 
 
@@ -85,15 +104,27 @@ public class Tutorial {
 
         retryBtn.setVisibility(View.GONE);
         nextBtn.setVisibility(View.GONE);
-        tip.setText(activity.getResources().getIdentifier("lesson"+progress[0]+"_text"+progress[1],"string",activity.getPackageName()));
-        sgf.loadBoardStateFromSgf(activity,"lesson"+progress[0]+"_state"+progress[1]+".sgf",GS);
-
+        if(progress[0]>3){ // 3 урок (раздела) всего, если больше то все заданий нет просто доска
+            activity.findViewById(R.id.game_btn_layout).setVisibility(View.GONE);
+            tip.setText(activity.getResources().getIdentifier("allLessonsComplete","string",activity.getPackageName()));
+            gUI.clear();
+        }
+        else {  // соответтсвенно здесь если урок не последний
+            tip.setText(activity.getResources().getIdentifier("lesson" + progress[0] + "_text" + progress[1], "string", activity.getPackageName()));
+            sgf.loadBoardStateFromSgf(activity, "lesson" + progress[0] + "_state" + progress[1] + ".sgf", GS);
+        }
+        if(progress[0]==3&&progress[1]==0){ // если это  урок про кнопку ПАС
+            activity.findViewById(R.id.game_btn_layout).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.returnBtn).setVisibility(View.GONE);
+        }
     }
 
 
 
     public void moveMaked(int x,int y){
+        if(progress[0]>3) return; // всего 3 урока пока
         if(progress[0]+progress[1]==0) stepComplete();
+
         if(!waitForNext) {
             int[] ans = sgf.checkAnswerFromSgf(activity, "lesson" + progress[0] + "_state" + progress[1] + ".sgf", x, y);
             switch (ans[0]) {
@@ -123,5 +154,8 @@ public class Tutorial {
         waitForNext=true;
     }
 
+    private void learnComplete(){
+
+    }
 
 }

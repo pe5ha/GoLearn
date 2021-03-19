@@ -25,6 +25,7 @@
     <string name="lesson2_text2">Создайте два глаза, чтобы ваша группа могла выжить!</string>
     <string name="lesson2_text3">Пустые ячейки крторые полностью окружены вашими камнями называются "территория". \nЗащищайте вашу территорию от белого игрока.</string>
     <string name="lesson3_text0">Когда вы считаете что на доске не осталось выгодных ходов, игру можно закончить если два игрока пропустят своих ходы. \nЭта партия окончена. \nНажмите пас, чтобы пропустить ход.</string>
+    <string name="allLessonsComplete">Поздравляю! Вы прошли обучение!</string>
     <string name="lesson_complete">Отлично!</string>
     <string name="lesson_failed">Неправильно!</string>
     <string name="lessonNextBtnText">Дальше</string>
