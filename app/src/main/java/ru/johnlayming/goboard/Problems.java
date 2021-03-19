@@ -1,45 +1,40 @@
 package ru.johnlayming.goboard;
 
 import android.app.Activity;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-public class Tutorial {
 
 
-    private int[] progress;
+public class Problems {
+
+
+    private int progress;
     private Activity activity;
     private GameUI gUI;
     private GameState GS;
     private SgfWorker sgf;
 
-    private int[] numbStepsInLesson;
-
     private Button nextBtn;
     private Button retryBtn;
 
     private TextView tip;
-    private LinearLayout tutorialLayout;
     private boolean waitForNext=false;
 
 
 
-    Tutorial(Activity _activity,GameUI _gUI){
+    Problems(Activity _activity,GameUI _gUI){
         activity=_activity;
         activity.findViewById(R.id.info_layout).setVisibility(View.GONE);
         activity.findViewById(R.id.settings_layout).setVisibility(View.GONE);
         activity.findViewById(R.id.game_btn_layout).setVisibility(View.GONE);
-        activity.findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
         activity.findViewById(R.id.lesson_layout).setVisibility(View.VISIBLE);
-        activity.setTitle("Обучение");
+        activity.findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
+        activity.setTitle("Задачи");
         gUI=_gUI;
-        gUI.setModeProblem(1);
-        gUI.setT(this);
+        gUI.setModeProblem(2);
+        gUI.setP(this);
         GS=gUI.getGameState();
         nextBtn=activity.findViewById(R.id.lessonNextBtn);
         nextBtn.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +47,7 @@ public class Tutorial {
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progress[1]--;
+                progress--;
                 nextStep();
             }
         });
@@ -60,12 +55,14 @@ public class Tutorial {
 
 
 
-        progress= new int[]{0, 0}; // progress[0] - lessons, progress[1] - in lesson progress
+        progress= 1; // progress[0] - lessons, progress[1] - in lesson progress
         // загрузить урок и прогресс из файла
 
-        numbStepsInLesson = new int[]{1,8,4,1};
+
         sgf = new SgfWorker();
-        if(progress[0]+progress[1]>0) sgf.loadBoardStateFromSgf(activity,"lesson"+progress[0]+"_state"+progress[1]+".sgf",GS);
+        sgf.loadBoardStateFromSgfProblem(activity,"CAPTURING STONE - ELEMENTARY/CAPTURING STONE - EASY ("+progress+").sgf",GS);
+        tip.setText(GS.whoseTurn==1?"Ход чёрных":"Ход белых");
+
     }
 
 
@@ -76,26 +73,21 @@ public class Tutorial {
         waitForNext=false;
         GS=null;
         GS=gUI.clear();
-        progress[1]++;
-        if(progress[1]>=numbStepsInLesson[progress[0]]){
-            progress[0]++;
-            progress[1]=0;
-        }
+        progress++;
         //if(progress[0]>numbLessons) ...
 
         retryBtn.setVisibility(View.GONE);
         nextBtn.setVisibility(View.GONE);
-        tip.setText(activity.getResources().getIdentifier("lesson"+progress[0]+"_text"+progress[1],"string",activity.getPackageName()));
-        sgf.loadBoardStateFromSgf(activity,"lesson"+progress[0]+"_state"+progress[1]+".sgf",GS);
+        sgf.loadBoardStateFromSgfProblem(activity,"CAPTURING STONE - ELEMENTARY/CAPTURING STONE - EASY ("+progress+").sgf",GS);
+        tip.setText(GS.whoseTurn==1?"Ход чёрных":"Ход белых");
 
     }
 
 
 
     public void moveMaked(int x,int y){
-        if(progress[0]+progress[1]==0) stepComplete();
         if(!waitForNext) {
-            int[] ans = sgf.checkAnswerFromSgf(activity, "lesson" + progress[0] + "_state" + progress[1] + ".sgf", x, y);
+            int[] ans = sgf.checkAnswerFromSgf(activity, "CAPTURING STONE - ELEMENTARY/CAPTURING STONE - EASY ("+progress+").sgf", x, y);
             switch (ans[0]) {
                 case 0:
                     GS.attemptMove(ans[1], ans[2]);

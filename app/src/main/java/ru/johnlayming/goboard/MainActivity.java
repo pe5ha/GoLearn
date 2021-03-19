@@ -1,6 +1,7 @@
 package ru.johnlayming.goboard;
 
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,8 +14,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.Toast;
 
 
@@ -32,6 +35,8 @@ private DrawerLayout drawer;
 public ImageView[][] board;
 public int size=9;
 public int cellSizeInDp=40;
+public int pngBoardSizeInDp=360;
+public String  pngBoardPath="board9x9";
 public GameUI game;
 
 
@@ -55,10 +60,8 @@ private String boardTexture;
         toggle.syncState();
         ////////////////////////////////////////////////
         boardTexture="board_texture_0";
-       game = new GameUI(this,size,cellSizeInDp);
-//        findViewById(R.id.board_texture).setBackgroundResource(getResources().getIdentifier(boardTexture,"drawable",getPackageName()));
-
-
+        game = new GameUI(this,size,cellSizeInDp,pngBoardSizeInDp,pngBoardPath);
+        Tutorial T=new Tutorial(this,game); // start from TUTORIAL
     }
 
 
@@ -75,28 +78,34 @@ private String boardTexture;
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         if(id==R.id.nav_learn){
-            findViewById(R.id.settings_layout).setVisibility(View.GONE);
-            findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
             game.clear();
+            game=null;
+            game=new GameUI(this,size,cellSizeInDp,pngBoardSizeInDp,pngBoardPath);
+
             Tutorial T=new Tutorial(this,game);
         }
         else if(id==R.id.nav_play){
+            findViewById(R.id.info_layout).setVisibility(View.GONE);
             findViewById(R.id.settings_layout).setVisibility(View.GONE);
-            findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
-            game.clear();
             findViewById(R.id.lesson_layout).setVisibility(View.GONE);
+            findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
+            findViewById(R.id.game_btn_layout).setVisibility(View.VISIBLE);
+            setTitle("Игра");
+            game.clear();
+
         }
         else if(id==R.id.nav_problem){
-            findViewById(R.id.settings_layout).setVisibility(View.GONE);
-            findViewById(R.id.main_layout).setVisibility(View.VISIBLE);
-            SgfWorker sgf = new SgfWorker();
+
             game.clear();
-            sgf.loadBoardStateFromSgf(this,"lesson1_state0.sgf",game.getGameState());
+            Problems P=new Problems(this,game);
         }
         else if(id==R.id.nav_settings){
+            findViewById(R.id.info_layout).setVisibility(View.GONE);
             findViewById(R.id.main_layout).setVisibility(View.GONE);
+            findViewById(R.id.game_btn_layout).setVisibility(View.GONE);
             findViewById(R.id.settings_layout).setVisibility(View.VISIBLE);
-            RadioGroup boardRadio,stoneRadio;
+            setTitle("Настройки");
+            RadioGroup boardRadio,stoneRadio, sizeBoardRadio;
             boardRadio=findViewById(R.id.radiosBoard);
             boardRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
@@ -138,13 +147,61 @@ private String boardTexture;
 
                 }
             });
+            sizeBoardRadio=findViewById(R.id.radioBoardSize);
+            sizeBoardRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    game.clear();
+                    game=null;
+                    switch (checkedId){
+                        case R.id.radioBoardSize1:
+
+                            game=new GameUI(MainActivity.this,9,40,360,"board9x9");
+                            break;
+                        case R.id.radioBoardSize2:
+
+                            game=new GameUI(MainActivity.this,13,27,351,"board13x13");
+                            break;
+                        case R.id.radioBoardSize3:
+
+                            game=new GameUI(MainActivity.this,19,19,361,"board19x19");
+                            break;
+                    }
+
+                }
+            });
+            Switch switchCoords;
+            switchCoords = findViewById(R.id.switch_coordinate);
+            switchCoords.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        findViewById(R.id.coordinates_imageview).setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        findViewById(R.id.coordinates_imageview).setVisibility(View.GONE);
+                    }
+                }
+            });
+
         }
         else if(id==R.id.nav_share){
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Го играть в Го? Смотри, вот приложение с обучением! \nhttp://pe5ha.me/");
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Го играть в Го? Смотри, вот приложение с обучением! \nhttps://sourceforge.net/projects/go-game-learn/files/");
             sendIntent.setType("text/plain");
             startActivity(sendIntent);
+        }
+        else if(id==R.id.nav_exit){
+            finish();
+            System.exit(0);
+        }
+        else if(id==R.id.nav_info){
+            findViewById(R.id.main_layout).setVisibility(View.GONE);
+            findViewById(R.id.settings_layout).setVisibility(View.GONE);
+            findViewById(R.id.game_btn_layout).setVisibility(View.GONE);
+            findViewById(R.id.info_layout).setVisibility(View.VISIBLE);
+            setTitle("Игра Го - Обучение");
         }
 
 

@@ -13,8 +13,11 @@ public class GameUI {
     public int size;
     public int cellSizeInDp;
     public int stoneSizeInDp;
+    public int pngBoardSizeInDp;
+    public String pngBoardPath;
     private int mode; // 0 - play, 1 - tutorial
     private Tutorial T;
+    private Problems P;
 
 
     private ImageView boardView;
@@ -32,15 +35,21 @@ public class GameUI {
 
 
     @SuppressLint("ClickableViewAccessibility")
-    public GameUI(Activity _activity, int size, int _cellSizeInDp){
+    public GameUI(Activity _activity, int size, int _cellSizeInDp, int pngBoardSizeInDp,String pngBoardPath){
 //        this.mode=mode;
         this.activity=_activity;
 
         this.size=size;
         this.cellSizeInDp=_cellSizeInDp;
         this.stoneSizeInDp=_cellSizeInDp;
+        this.pngBoardSizeInDp=pngBoardSizeInDp;
+        this.pngBoardPath=pngBoardPath;
+
         stones = new ImageView[size][size];
         boardView = activity.findViewById(R.id.board);
+        boardView.getLayoutParams().width=dpToPx(pngBoardSizeInDp);
+        boardView.getLayoutParams().height=dpToPx(pngBoardSizeInDp);
+        boardView.setImageResource(activity.getResources().getIdentifier(pngBoardPath,"drawable",activity.getPackageName()));
 
         boardLayout = activity.findViewById(R.id.board_layout);
 
@@ -65,6 +74,8 @@ public class GameUI {
                     if(GS.attemptMove(pointX,pointY)){
                         if(mode==1) {
                             T.moveMaked(pointX,pointY);
+                        } else if(mode==2){
+                            P.moveMaked(pointX,pointY);
                         }
                     };
                 }
@@ -77,10 +88,9 @@ public class GameUI {
 
     }
 
-    public void setModeTutorial(Tutorial _T){
-        this.T=_T;
-        if(T==null) mode=0;
-        else mode=1;
+
+    public void setModeProblem(int mode){ // 0 - play, 1 - tutorial, 2 - problems
+        this.mode=mode;
     }
 
     public void addStone(int x, int y,int stone){
@@ -113,7 +123,7 @@ public class GameUI {
 
 
     public void suicideMove(){
-        Toast.makeText(activity, "Самоубийственный ход!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity, "Самоубийственный ход запрещён!", Toast.LENGTH_SHORT).show();
     }
     
     public void koMove(){
@@ -146,6 +156,13 @@ public class GameUI {
         return GS;
     }
 
+    public void setT(Tutorial t) {
+        T = t;
+    }
+
+    public void setP(Problems p) {
+        P = p;
+    }
 
     public void setBlackStoneImg(String blackStoneImg) {
         this.blackStoneImg = blackStoneImg;

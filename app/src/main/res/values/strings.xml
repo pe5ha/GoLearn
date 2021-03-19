@@ -11,12 +11,12 @@
     <string name="menu_gallery">Играть</string>
     <string name="menu_slideshow">Задачи</string>
 
-    <string name="lesson0_text0">\tКамень можно поставить на любое пересечение линий, даже на самом краю. \n\tЦель игры - окружить как можно больше пространства. \n\tКамни нельзя двигать, но можно захватывать. \n\n\tСделайте ход, чтобы продолжить.</string>
+    <string name="lesson0_text0">Камень можно поставить на любое пересечение линий, даже на самом краю. \n\nСделайте ход, чтобы продолжить.</string>
     <string name="lesson1_text0">Захватите белый камень.</string>
     <string name="lesson1_text1">Захватите группу белых камней.</string>
     <string name="lesson1_text2">Вы можете захватить камни на стороне, захватите белые камни.</string>
-    <string name="lesson1_text3">Окружить не достаточно, необходимо заполнить все место вокруг камней. \nЗахватите белые камни.</string>
-    <string name="lesson1_text4">Окружить не достаточно, необходимо заполнить все место вокруг камней. \nЗахватите белые камни.</string>
+    <string name="lesson1_text3">Окружить не достаточно, необходимо заполнить всё место вокруг камней. \nЗахватите белые камни.</string>
+    <string name="lesson1_text4">Окружить не достаточно, необходимо заполнить всё место вокруг камней. \nЗахватите белые камни.</string>
     <string name="lesson1_text5">Захватите белые камни до того как белые сформируют два "глаза".</string>
     <string name="lesson1_text6">Захватите белые камни до того как белые сформируют два "глаза".</string>
     <string name="lesson1_text7">Захватите белые камни до того как белые сформируют два "глаза".</string>
@@ -25,10 +25,10 @@
     <string name="lesson2_text2">Создайте два глаза, чтобы ваша группа могла выжить!</string>
     <string name="lesson2_text3">Пустые ячейки крторые полностью окружены вашими камнями называются "территория". \nЗащищайте вашу территорию от белого игрока.</string>
     <string name="lesson3_text0">Когда вы считаете что на доске не осталось выгодных ходов, игру можно закончить если два игрока пропустят своих ходы. \nЭта партия окончена. \nНажмите пас, чтобы пропустить ход.</string>
-    <string name="lesson_complete">\tОтлично!</string>
-    <string name="lesson_failed">\tНеправильно!</string>
+    <string name="lesson_complete">Отлично!</string>
+    <string name="lesson_failed">Неправильно!</string>
     <string name="lessonNextBtnText">Дальше</string>
     <string name="lessonRetryBtnText">Заново</string>
-    <string name="infoText">Игра Го - Обучение\nВерсия - v1.0\n Создатель - Науменко Павел\n pavel.naumenko.2000@yandex.ru</string>
+    <string name="infoText">Игра Го - Обучение\nВерсия 1.0\n Создатель Науменко Павел\n pavel.naumenko.2000@yandex.ru</string>
 
 </resources>

@@ -183,7 +183,7 @@ public class GameState {
         gameUI.addStone(x,y,whoseTurn);
         turn++;
         opponent=whoseTurn;
-        whoseTurn = turn % 2 == 1 ? 1 : 2;
+        whoseTurn = whoseTurn == 1 ? 2 : 1;
         lastMoveX=moveX;
         lastMoveY=moveY;
         typeofLastMove=0;
@@ -202,6 +202,12 @@ public class GameState {
     public void giveUp(){
         win = (turn%2==1?2:1);
 
+    }
+
+    public void resetTurnCount(){
+        this.turn=1;
+        this.whoseTurn=1;
+        this.opponent=2;
     }
 
     public boolean moveCheck(int x,int y){

@@ -35,9 +35,12 @@
                 android:id="@+id/nav_info"
                 android:icon="@drawable/ic_info_outline_black_24dp"
                 android:title="Информация" />
+            <item
+                android:id="@+id/nav_exit"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Выход" />
         </menu>
     </item>
-
 
 
 </menu>
