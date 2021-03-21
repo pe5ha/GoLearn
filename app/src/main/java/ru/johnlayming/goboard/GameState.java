@@ -203,6 +203,7 @@ public class GameState {
     public void pass(){
         if(typeofLastMove==1){ // два паса, конец игры подсчет очков
             endGame();
+            gameUI.gameEnd();
         } else {
             typeofLastMove=1;
             turn++;

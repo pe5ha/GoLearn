@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ public class GameUI {
     private RelativeLayout boardLayout;
     private RelativeLayout.LayoutParams stoneLayoutParams;
     private ImageView stoneView;
+
+    private Button passBtn;
 
     private GameState GS;
     private int pointX;
@@ -52,6 +55,7 @@ public class GameUI {
         boardView.setImageResource(activity.getResources().getIdentifier(pngBoardPath,"drawable",activity.getPackageName()));
 
         boardLayout = activity.findViewById(R.id.board_layout);
+        passBtn = activity.findViewById(R.id.passBtn);
 
         // load from file settings
         setBlackStoneImg("stone_black_1");
@@ -81,6 +85,12 @@ public class GameUI {
                 }
 
                 return true;
+            }
+        });
+        passBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GS.pass();
             }
         });
 
@@ -129,6 +139,10 @@ public class GameUI {
     public void koMove(){
         Toast.makeText(activity, "Взятие Ко запрещено!", Toast.LENGTH_SHORT).show();
     }
+    public void gameEnd(){
+        Toast.makeText(activity, "Игра закончена. Подсчёт очков.", Toast.LENGTH_SHORT).show();
+    }
+
 
 
 
