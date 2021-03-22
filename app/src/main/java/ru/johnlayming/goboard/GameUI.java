@@ -16,7 +16,7 @@ public class GameUI {
     public int stoneSizeInDp;
     public int pngBoardSizeInDp;
     public String pngBoardPath;
-    private int mode; // 0 - play, 1 - tutorial
+    private int mode; // 0 - play, 1 - tutorial, 2 - problems
     private Tutorial T;
     private Problems P;
 
@@ -65,6 +65,14 @@ public class GameUI {
         GS = new GameState(this,size);
 
 
+        passBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(activity, "Пас!", Toast.LENGTH_SHORT).show();
+                GS.pass();
+
+            }
+        });
         boardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -87,12 +95,7 @@ public class GameUI {
                 return true;
             }
         });
-        passBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GS.pass();
-            }
-        });
+
 
 
 

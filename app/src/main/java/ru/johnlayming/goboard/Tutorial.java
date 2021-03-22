@@ -60,12 +60,15 @@ public class Tutorial {
             }
         });
         passBtn=activity.findViewById(R.id.passBtn);
+        /*
         passBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 stepComplete();
             }
         });
+
+         */
         returnBtn=activity.findViewById(R.id.returnBtn);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -205,6 +205,8 @@ public class GameState {
             endGame();
             gameUI.gameEnd();
         } else {
+            opponent=whoseTurn;
+            whoseTurn = whoseTurn == 1 ? 2 : 1;
             typeofLastMove=1;
             turn++;
         }
