@@ -26,24 +26,21 @@ import android.widget.Toast;
 -
 -
 -------
-. убрать задачи
+[+ убрать задачи]
 . доделать адеватно обучение
 . доделать адекватно игру с другом
+. кнопка вернуть
+. сохранение игры
+. подсчет очков
 . сделать онлайн игру с другом
 . позиция камней на больших досках съехала...
 . приятные мелочи:
-    звук
-    задержка ответа бота
+    . звук
+    . задержка ответа бота
 . счётчик ходов видимый
 . чей ход показаель
 
  */
-/* Не сделано
-*  пас не сделан в движке, только в обучении работает как кнопка
-*  сохранения обучения не сделаны в обучении
-*  сохранения не сделаны игры в движке
-*  endgame
-* */
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -79,7 +76,11 @@ private String boardTexture;
         ////////////////////////////////////////////////
         boardTexture="board_texture_0";
         game = new GameUI(this,size,cellSizeInDp,pngBoardSizeInDp,pngBoardPath);
-        Tutorial T=new Tutorial(this,game); // start from TUTORIAL
+        //Tutorial T=new Tutorial(this,game); // start from TUTORIAL
+        /*------INITIALIZATE-------*/
+        findViewById(R.id.info_layout).setVisibility(View.GONE);
+        findViewById(R.id.settings_layout).setVisibility(View.GONE);
+        findViewById(R.id.lesson_layout).setVisibility(View.GONE);
     }
 
 
@@ -95,6 +96,7 @@ private String boardTexture;
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
+        /* пока что убрал обучение, так как оно говно. Сделаю потом захардкоченое понятное и красивое. А сейчас сделаю красивым просто игру и движок.
         if(id==R.id.nav_learn){
             game.clear();
             game=null;
@@ -102,7 +104,9 @@ private String boardTexture;
 
             Tutorial T=new Tutorial(this,game);
         }
-        else if(id==R.id.nav_play){
+
+         */
+        if(id==R.id.nav_play){
             findViewById(R.id.info_layout).setVisibility(View.GONE);
             findViewById(R.id.settings_layout).setVisibility(View.GONE);
             findViewById(R.id.lesson_layout).setVisibility(View.GONE);

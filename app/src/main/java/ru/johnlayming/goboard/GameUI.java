@@ -28,6 +28,7 @@ public class GameUI {
     private ImageView stoneView;
 
     private Button passBtn;
+    private Button returnBtn;
 
     private GameState GS;
     private int pointX;
@@ -56,6 +57,7 @@ public class GameUI {
 
         boardLayout = activity.findViewById(R.id.board_layout);
         passBtn = activity.findViewById(R.id.passBtn);
+        returnBtn = activity.findViewById(R.id.returnBtn);
 
         // load from file settings
         setBlackStoneImg("stone_black_1");
@@ -71,6 +73,12 @@ public class GameUI {
                 Toast.makeText(activity, "Пас!", Toast.LENGTH_SHORT).show();
                 GS.pass();
 
+            }
+        });
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GS.returnMove();
             }
         });
         boardView.setOnTouchListener(new View.OnTouchListener() {
