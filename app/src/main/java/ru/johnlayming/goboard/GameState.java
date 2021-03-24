@@ -146,7 +146,7 @@ public class GameState {
             }
             return true;
         }
-        group.clear();
+        //group.clear();
         return false;
 
     }
@@ -191,12 +191,20 @@ public class GameState {
 
     }
     public void returnMove(){
-        board[lastMoveY][lastMoveX] = 0;
-        gameUI.removeStone(lastMoveX,lastMoveY);
-        turn--;
-        whoseTurn = whoseTurn == 1 ? 2 : 1;
-        opponent = opponent == 1 ? 2 : 1;
-        typeofLastMove=2; // return
+        if(typeofLastMove!=2) {
+            board[lastMoveY][lastMoveX] = 0;
+            gameUI.removeStone(lastMoveX, lastMoveY);
+            if (capturedStones > 0) {
+                for (int i = 0; i < group.size(); i++) {
+                    board[group.get(i).y][group.get(i).x] = (byte) whoseTurn;
+                    gameUI.addStone(group.get(i).x, group.get(i).y, whoseTurn);
+                }
+            }
+            turn--;
+            whoseTurn = whoseTurn == 1 ? 2 : 1;
+            opponent = opponent == 1 ? 2 : 1;
+            typeofLastMove = 2; // return
+        }
     }
 
 
