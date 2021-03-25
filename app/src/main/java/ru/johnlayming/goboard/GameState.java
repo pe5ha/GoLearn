@@ -1,6 +1,7 @@
 package ru.johnlayming.goboard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameState {
@@ -21,7 +22,8 @@ public class GameState {
     public int lastMoveY;
     public int capturedStones;
     public GameUI gameUI;
-    public ArrayList<Stone> group;
+    public ArrayList<Coordinates> group;
+    public ArrayList<Stone> stonesHistory;
 
 
 
@@ -37,6 +39,7 @@ public class GameState {
         koTurn=-2;
         capturedStones=0;
         group = new ArrayList<>();
+        stonesHistory = new ArrayList<>();
     }
 
     public void setState(byte[][] p){
@@ -48,11 +51,7 @@ public class GameState {
         moveX=x;
         moveY=y;
         koRule=false;
-        if(board[y][x]!=0){ //пункт уже занят
-            //
-        }
-        else {
-
+        if(board[y][x]==0){ //если пункт не занят
 
             group.clear();
             board[y][x]= (byte) whoseTurn;
@@ -141,6 +140,7 @@ public class GameState {
                 koTurn--;
             }
             for (int i = 0; i < group.size(); i++) {
+                if(!koRule) stonesHistory.get(findStoneByXY(group.get(i).x,group.get(i).y)).turnOfDie=turn;
                 board[group.get(i).y][group.get(i).x]=0;
                 gameUI.removeStone(group.get(i).x,group.get(i).y);
             }
@@ -155,7 +155,7 @@ public class GameState {
         for(int i=0;i<group.size();i++){
             if(group.get(i).x==x&&group.get(i).y==y) return false;
         }
-        group.add(new Stone(x,y));
+        group.add(new Coordinates(x,y));
 
         if(x>0){
             if(board[y][x-1]==0) return true;
@@ -180,6 +180,7 @@ public class GameState {
 
 
     public void makeMove(int x,int y){
+        stonesHistory.add(new Stone(moveX,moveY,whoseTurn,turn));
         board[y][x] = (byte) (whoseTurn); // чей сейчас ход делается белых или черных на основе количества ходов
         gameUI.addStone(x,y,whoseTurn);
         turn++;
@@ -194,12 +195,17 @@ public class GameState {
         if(typeofLastMove!=2) {
             board[lastMoveY][lastMoveX] = 0;
             gameUI.removeStone(lastMoveX, lastMoveY);
-            if (capturedStones > 0) {
-                for (int i = 0; i < group.size(); i++) {
-                    board[group.get(i).y][group.get(i).x] = (byte) whoseTurn;
-                    gameUI.addStone(group.get(i).x, group.get(i).y, whoseTurn);
+
+            for (int i = 0; i < stonesHistory.size(); i++) {
+                if(stonesHistory.get(i).turnOfDie==turn-1) {
+                    board[stonesHistory.get(i).y][stonesHistory.get(i).x] = (byte)stonesHistory.get(i).color;
+                    stonesHistory.get(i).turnOfDie=0;
+                    gameUI.addStone(stonesHistory.get(i).x, stonesHistory.get(i).y,stonesHistory.get(i).color);
                 }
             }
+
+            stonesHistory.remove(stonesHistory.size()-1);
+
             turn--;
             whoseTurn = whoseTurn == 1 ? 2 : 1;
             opponent = opponent == 1 ? 2 : 1;
@@ -247,14 +253,34 @@ public class GameState {
     public void setWhoseTurn(int _whoseTurn){
         this.whoseTurn=_whoseTurn;
     }
+    public int findStoneByXY(int x, int y){
+        for (int i = 0; i < stonesHistory.size(); i++) {
+            if(stonesHistory.get(i).x==x&&stonesHistory.get(i).y==y&&stonesHistory.get(i).turnOfDie<=0) return i;
+        }
+        return -1;
+    }
 
+}
+class Coordinates{
+    public int x;
+    public int y;
+    Coordinates(int x,int y) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 class Stone {
     public int x;
     public int y;
-    Stone(int x,int y){
+    public int color;
+    public int turnOfSpawn;
+    public int turnOfDie;
+    Stone(int x,int y,int color, int turnOfSpawn){
         this.x=x;
         this.y=y;
+        this.color=color;
+        this.turnOfSpawn=turnOfSpawn;
+        this.turnOfDie=0;
     }
 }
