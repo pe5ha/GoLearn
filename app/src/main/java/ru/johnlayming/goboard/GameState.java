@@ -56,7 +56,19 @@ public class GameState {
             group.clear();
             board[y][x]= (byte) whoseTurn;
             if(Capture(x,y)){
-                makeMove(x, y);
+                //makeMove(x, y);
+
+                // КАМНИ ЗАХВАЧЕНЫ, СДЕЛАТЬ ХОД
+                stonesHistory.add(new Stone(moveX,moveY,whoseTurn,turn));
+                board[y][x] = (byte) (whoseTurn); // чей сейчас ход делается белых или черных на основе количества ходов
+                gameUI.addStone(x,y,whoseTurn);
+                turn++;
+                opponent=whoseTurn;
+                whoseTurn = whoseTurn == 1 ? 2 : 1;
+                lastMoveX=moveX;
+                lastMoveY=moveY;
+                typeofLastMove=0;
+
                 return true;
             }
             else if(koRule){
@@ -213,6 +225,20 @@ public class GameState {
         }
     }
 
+    public boolean koDetector(){
+        boolean koCanBeNow;
+        Coordinates koCanBeHere;
+        if(koCanBeNow&&koCanBeHere.x==moveX&&koCanBeHere.y=moveY){
+
+
+            return true;
+        }
+        else {
+            if (capturedStones==1&&)
+
+            return false;
+        }
+    }
 
     public void pass(){
         if(typeofLastMove==1){ // два паса, конец игры подсчет очков
