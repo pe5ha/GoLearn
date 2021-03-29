@@ -18,6 +18,9 @@ public class GameState {
     public boolean lastKoCanBeNow;
     public boolean koRuleNow;
     public Coordinates koCanBeHere;
+    public int blackCapture;
+    public int whiteCapture;
+    public int cpt;
     public int win; // 0, 1 - black win, 2 - white win
     public int moveX;
     public int moveY;
@@ -48,6 +51,8 @@ public class GameState {
         koCanBeHere = new Coordinates(-1,-1);
         koTurn=-1;
         capturedStones=0; // чтобы понимать группа из скольких камней была захвачена. если 1 камень - дальше возможно ко
+        blackCapture=0;
+        whiteCapture=0;
         // Array group for search his dame
         group = new ArrayList<>();
         // Array stonesHistory for save spawn turn and status each stone
@@ -123,7 +128,7 @@ public class GameState {
     }
 
     public boolean Capture(int x,int y){
-        int cpt=0;
+        cpt=0;
         capturedStones=0;
         if(x>0){
             if(board[y][x-1]==opponent){
@@ -154,9 +159,13 @@ public class GameState {
 //                    return false;
 //                }
 //            }
+            if(whoseTurn==1) blackCapture+=capturedStones;
+            else whiteCapture+=capturedStones;
             return true;  // ГРУППА ЗАХВАЧЕНА
         }
         if(cpt==1&&!(koCanBeNow&&koCanBeHere.x==moveX&&koCanBeHere.y==moveY)){
+            if(whoseTurn==1) blackCapture+=capturedStones;
+            else whiteCapture+=capturedStones;
             return true;
         }
         return false;
@@ -254,11 +263,15 @@ public class GameState {
 
             stonesHistory.remove(stonesHistory.size()-1);
 
+            if(whoseTurn==2) blackCapture-=capturedStones;
+            else whiteCapture-=capturedStones;
             koCanBeNow=lastKoCanBeNow;
             turn--;
             whoseTurn = whoseTurn == 1 ? 2 : 1;
             opponent = opponent == 1 ? 2 : 1;
             typeofLastMove = 2; // return
+
+
         }
     }
 

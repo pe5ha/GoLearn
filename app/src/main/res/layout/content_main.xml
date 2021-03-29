@@ -88,7 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/board_layout"
-            android:visibility="visible">
+            android:visibility="visible"
+            tools:visibility="gone">
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -162,8 +163,30 @@
                 android:textColor="#785521"
                 android:textSize="24sp"
                 android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/whiteCapture_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Захвачено белых\n0"
+                android:textColor="#785521"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/turnCounter_view" />
+
+            <TextView
+                android:id="@+id/blackCapture_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Захаачено чёрных\n0"
+                android:textColor="#785521"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/turnCounter_view" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

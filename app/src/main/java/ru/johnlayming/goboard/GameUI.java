@@ -32,6 +32,8 @@ public class GameUI {
     private Button returnBtn;
 
     private TextView turnCountView;
+    private TextView whiteCapturetView;
+    private TextView blackCaptureView;
 
     private GameState GS;
     private int pointX;
@@ -63,6 +65,8 @@ public class GameUI {
         returnBtn = activity.findViewById(R.id.returnBtn);
 
         turnCountView = activity.findViewById(R.id.turnCounter_view);
+        whiteCapturetView=activity.findViewById(R.id.whiteCapture_view);
+        blackCaptureView=activity.findViewById(R.id.blackCapture_view);
 
         // load from file settings
         setBlackStoneImg("stone_black_1");
@@ -120,6 +124,8 @@ public class GameUI {
     public void updateGameStatus(){
         if(GS.turn%2==1) turnCountView.setText("Ход чёрных");
         else turnCountView.setText("Ход белых");
+        whiteCapturetView.setText("Захвачено белых\n"+GS.whiteCapture);
+        blackCaptureView.setText("Захвачено чёрных\n"+GS.blackCapture);
     }
 
     public void setModeProblem(int mode){ // 0 - play, 1 - tutorial, 2 - problems
