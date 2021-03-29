@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameUI {
@@ -29,6 +30,8 @@ public class GameUI {
 
     private Button passBtn;
     private Button returnBtn;
+
+    private TextView turnCountView;
 
     private GameState GS;
     private int pointX;
@@ -59,6 +62,8 @@ public class GameUI {
         passBtn = activity.findViewById(R.id.passBtn);
         returnBtn = activity.findViewById(R.id.returnBtn);
 
+        turnCountView = activity.findViewById(R.id.turnCounter_view);
+
         // load from file settings
         setBlackStoneImg("stone_black_1");
         setWhiteStoneImg("stone_white_1");
@@ -79,6 +84,7 @@ public class GameUI {
             @Override
             public void onClick(View view) {
                 GS.returnMove();
+                updateGameStatus();
             }
         });
         boardView.setOnTouchListener(new View.OnTouchListener() {
@@ -97,6 +103,8 @@ public class GameUI {
                         } else if(mode==2){
                             P.moveMaked(pointX,pointY);
                         }
+
+
                     };
                 }
 
@@ -109,6 +117,10 @@ public class GameUI {
 
     }
 
+    public void updateGameStatus(){
+        if(GS.turn%2==1) turnCountView.setText("Ход чёрных");
+        else turnCountView.setText("Ход белых");
+    }
 
     public void setModeProblem(int mode){ // 0 - play, 1 - tutorial, 2 - problems
         this.mode=mode;
@@ -133,13 +145,14 @@ public class GameUI {
         stoneView.setLayoutParams(stoneLayoutParams);
         stones[y][x] = stoneView;
         boardLayout.addView(stoneView, -1);
-
+        updateGameStatus();
 
     }
     public void removeStone(int x,int y){
         boardLayout.removeView(stones[y][x]);
         //stones[y][x].setImageDrawable(null); ???? not work
         stones[y][x]=null;
+        updateGameStatus();
     }
 
 

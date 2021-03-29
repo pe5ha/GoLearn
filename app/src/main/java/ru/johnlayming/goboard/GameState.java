@@ -65,10 +65,11 @@ public class GameState {
                 //makeMove(x, y);
 
                 // КАМНИ ЗАХВАЧЕНЫ, СДЕЛАТЬ ХОД
+                turn++;
                 stonesHistory.add(new Stone(moveX,moveY,whoseTurn,turn));
                 board[y][x] = (byte) (whoseTurn); // чей сейчас ход делается белых или черных на основе количества ходов
                 gameUI.addStone(x,y,whoseTurn);
-                turn++;
+
                 opponent=whoseTurn;
                 whoseTurn = whoseTurn == 1 ? 2 : 1;
                 lastMoveX=moveX;
@@ -94,10 +95,10 @@ public class GameState {
                     //makeMove(x, y);
 
                     // У КАМНЯ ЕСТЬ ДАМЭ, СДЕЛАТЬ ХОД
+                    turn++;
                     stonesHistory.add(new Stone(moveX,moveY,whoseTurn,turn));
                     board[y][x] = (byte) (whoseTurn); // чей сейчас ход делается белых или черных на основе количества ходов
                     gameUI.addStone(x,y,whoseTurn);
-                    turn++;
                     opponent=whoseTurn;
                     whoseTurn = whoseTurn == 1 ? 2 : 1;
                     lastMoveX=moveX;
@@ -230,6 +231,7 @@ public class GameState {
         board[y][x] = (byte) (whoseTurn); // чей сейчас ход делается белых или черных на основе количества ходов
         gameUI.addStone(x,y,whoseTurn);
         turn++;
+        gameUI.updateGameStatus();
         opponent=whoseTurn;
         whoseTurn = whoseTurn == 1 ? 2 : 1;
         lastMoveX=moveX;
@@ -271,6 +273,7 @@ public class GameState {
             whoseTurn = whoseTurn == 1 ? 2 : 1;
             typeofLastMove=1;
             turn++;
+            gameUI.updateGameStatus();
         }
     }
 
