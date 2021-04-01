@@ -124,8 +124,8 @@ public class GameUI {
     public void updateGameStatus(){
         if(GS.turn%2==1) turnCountView.setText("Ход чёрных");
         else turnCountView.setText("Ход белых");
-        whiteCapturetView.setText("Захвачено белых\n"+GS.whiteCapture);
-        blackCaptureView.setText("Захвачено чёрных\n"+GS.blackCapture);
+        whiteCapturetView.setText("Чёрный захватил:\n"+GS.blackCapture+" камней");
+        blackCaptureView.setText("Белый захватил:\n"+GS.whiteCapture+" камней");
     }
 
     public void setModeProblem(int mode){ // 0 - play, 1 - tutorial, 2 - problems
