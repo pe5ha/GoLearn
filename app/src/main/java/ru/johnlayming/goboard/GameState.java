@@ -18,9 +18,13 @@ public class GameState {
     public boolean lastKoCanBeNow;
     public boolean koRuleNow;
     public Coordinates koCanBeHere;
-    public int blackCapture;
-    public int whiteCapture;
-    public int cpt;
+    public int blackCapture; // черный захватил
+    public int whiteCapture; // белый захватил
+    public int whiteTerritory;
+    public int blackTerritory;
+    public int blackPoints;
+    public int whitePoints;
+    public float komi;
     public int win; // 0, 1 - black win, 2 - white win
     public int moveX;
     public int moveY;
@@ -53,6 +57,13 @@ public class GameState {
         capturedStones=0; // чтобы понимать группа из скольких камней была захвачена. если 1 камень - дальше возможно ко
         blackCapture=0;
         whiteCapture=0;
+        whiteTerritory=0;
+        blackTerritory=0;
+        blackPoints=0;
+        whitePoints=0;
+        if(size==9) komi = (float) 4.5;
+        else if (size==13) komi = (float) 5.5;
+        else komi = (float) 6.5;
         // Array group for search his dame
         group = new ArrayList<>();
         // Array stonesHistory for save spawn turn and status each stone
@@ -128,7 +139,7 @@ public class GameState {
     }
 
     public boolean Capture(int x,int y){
-        cpt=0;
+        int cpt=0;
         capturedStones=0;
         if(x>0){
             if(board[y][x-1]==opponent){
@@ -307,7 +318,45 @@ public class GameState {
     }
 
     public void endGame(){
+        whitePoints+=whiteCapture;
+        blackPoints+=blackCapture;
+        countTerritory();
+        whitePoints+=whiteTerritory;
+        blackPoints+=blackTerritory;
+    }
+    public void countTerritory() {
+        ArrayList<Coordinates> emptyGroup;
+        emptyGroup = new ArrayList<>();
 
+
+    }
+    public boolean searchSpaces(ArrayList<Coordinates> emptyGroup,int x, int y){
+        for(int i=0;i<emptyGroup.size();i++){ // проверка, а не проверяли ли мы уже этот самый камень ранее
+            if(emptyGroup.get(i).x==x&&emptyGroup.get(i).y==y) return false;
+        }
+        emptyGroup.add(new Coordinates(x,y));
+
+//        if(x>0){
+//            if(board[y][x-1]==0) {
+//
+//            }
+//            else if(board[y][x-1]==who) if(searchDame(x-1,y,who)) return true;
+//
+//        }
+//        if(x<size-1){
+//            if(board[y][x+1]==0) return true;
+//            else if(board[y][x+1]==who) if(searchDame(x+1,y,who)) return true;
+//        }
+//        if(y>0){
+//            if(board[y-1][x]==0) return true;
+//            else if(board[y-1][x]==who) if(searchDame(x,y-1,who)) return true;
+//        }
+//        if(y<size-1){
+//            if(board[y+1][x]==0) return true;
+//            else if(board[y+1][x]==who) if(searchDame(x,y+1,who)) return true;
+//        }
+//
+        return false;
     }
 
     public void setState(byte[][] p){
