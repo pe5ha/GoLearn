@@ -320,13 +320,19 @@ public class GameState {
     public void endGame(){
         whitePoints+=whiteCapture;
         blackPoints+=blackCapture;
-        countTerritory();
+        //countTerritory();
+        CountTerritory CT = new CountTerritory(this);
+        CT.countTerritory();
+
         whitePoints+=whiteTerritory;
         blackPoints+=blackTerritory;
+
+
     }
     public void countTerritory() {
         ArrayList<Coordinates> emptyGroup;
         emptyGroup = new ArrayList<>();
+
 
 
     }

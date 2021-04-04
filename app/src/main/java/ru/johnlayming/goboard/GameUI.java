@@ -10,6 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class GameUI {
     public ImageView[][] stones;
     public int size;
@@ -27,6 +29,8 @@ public class GameUI {
     private RelativeLayout boardLayout;
     private RelativeLayout.LayoutParams stoneLayoutParams;
     private ImageView stoneView;
+    private ImageView territoryView;
+    private RelativeLayout.LayoutParams territoryLayoutParams;
 
     private Button passBtn;
     private Button returnBtn;
@@ -173,6 +177,28 @@ public class GameUI {
         Toast.makeText(activity, "Игра закончена. Подсчёт очков.", Toast.LENGTH_SHORT).show();
     }
 
+    public void drawTerritory(ArrayList<Coordinates> emptyGroup){
+        for (int i = 0; i < emptyGroup.size(); i++) {
+            stoneView = new ImageView(activity);
+            //видимо леяут парамсы нужно тоже каждый раз новые к каждомо новому вью создавать
+            stoneLayoutParams = new RelativeLayout.LayoutParams(dpToPx(stoneSizeInDp), dpToPx(stoneSizeInDp));
+//            if(stone==1) {
+//                stoneView.setImageResource(activity.getResources().getIdentifier(blackStoneImg,"drawable",activity.getPackageName()));
+//
+//            }
+//            else if(stone==2){
+//                stoneView.setImageResource(activity.getResources().getIdentifier(whiteStoneImg,"drawable",activity.getPackageName()));
+//
+//            }
+            stoneView.setImageResource(activity.getResources().getIdentifier("territory_white","drawable",activity.getPackageName()));
+
+            stoneLayoutParams.leftMargin = emptyGroup.get(i).x*dpToPx(cellSizeInDp) + (int)boardView.getX();
+            stoneLayoutParams.topMargin = emptyGroup.get(i).y*dpToPx(cellSizeInDp) + (int)boardView.getY();
+
+            stoneView.setLayoutParams(stoneLayoutParams);
+            boardLayout.addView(stoneView, -1);
+        }
+    }
 
 
 
