@@ -20,6 +20,7 @@ public class CountTerritory {
                 emptyGroup.clear();
                 searchSpaces(0,0);
 
+
                 GS.gameUI.drawTerritory(emptyGroup);
 //            }
 //        }
@@ -67,6 +68,64 @@ public class CountTerritory {
 
         return true;
     }
+
+    public void statusTerritory(){
+
+
+        int b=0,w=0;
+        int x,y;
+        ArrayList<Coordinates> adjacentStones = new ArrayList<>();
+        for (int i = 0; i < emptyGroup.size(); i++) {
+            x=emptyGroup.get(i).x;
+            y=emptyGroup.get(i).y;
+
+            if(emptyGroup.get(i).x>0){
+                if(GS.board[y][x-1]!=0) adjacentStones.add(new Coordinates(x-1,y));
+            }
+            if(x<GS.size-1){
+                if(GS.board[y][x+1]!=0) adjacentStones.add(new Coordinates(x+1,y));
+            }
+            if(y>0){
+                if(GS.board[y-1][x]!=0) adjacentStones.add(new Coordinates(x,y-1));
+            }
+            if(y<GS.size-1){
+                if(GS.board[y+1][x]!=0) adjacentStones.add(new Coordinates(x,y+1));
+            }
+        } // collect adjacentStones
+
+        for (int i = 0; i < adjacentStones.size(); i++) {
+            if(GS.board[adjacentStones.get(i).y][adjacentStones.get(i).x]==1) b++;
+            if(GS.board[adjacentStones.get(i).y][adjacentStones.get(i).x]==2) w++;
+        }
+
+        // 1. Случай первый: "чистая территория"
+        if(b==0||w==0){
+
+        }
+
+
+
+
+
+
+
+
+        // 2. Случай второй: мёртвая группа внутри.
+
+
+    }
+
+
+    public void eyeSearch(int x, int y){
+        // 1. либо у группы есть 2 глаза
+        // 2. либо у группы есть возможность создать 2 глаза
+
+
+
+    }
+
+
+
 
 
 }
