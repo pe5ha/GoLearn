@@ -177,27 +177,30 @@ public class GameUI {
         Toast.makeText(activity, "Игра закончена. Подсчёт очков.", Toast.LENGTH_SHORT).show();
     }
 
-    public void drawTerritory(ArrayList<Coordinates> emptyGroup){
-        for (int i = 0; i < emptyGroup.size(); i++) {
-            stoneView = new ImageView(activity);
-            //видимо леяут парамсы нужно тоже каждый раз новые к каждомо новому вью создавать
-            stoneLayoutParams = new RelativeLayout.LayoutParams(dpToPx(stoneSizeInDp), dpToPx(stoneSizeInDp));
-//            if(stone==1) {
-//                stoneView.setImageResource(activity.getResources().getIdentifier(blackStoneImg,"drawable",activity.getPackageName()));
-//
-//            }
-//            else if(stone==2){
-//                stoneView.setImageResource(activity.getResources().getIdentifier(whiteStoneImg,"drawable",activity.getPackageName()));
-//
-//            }
-            stoneView.setImageResource(activity.getResources().getIdentifier("territory_white","drawable",activity.getPackageName()));
+    public void drawTerritory(ArrayList<ArrayList<Coordinates>> territoryParts, int color){
+        for (int i = 0; i < territoryParts.size(); i++) {
+            for (int j = 0; j < territoryParts.get(i).size(); j++) {
 
-            stoneLayoutParams.leftMargin = emptyGroup.get(i).x*dpToPx(cellSizeInDp) + (int)boardView.getX();
-            stoneLayoutParams.topMargin = emptyGroup.get(i).y*dpToPx(cellSizeInDp) + (int)boardView.getY();
+                stoneView = new ImageView(activity);
+                //видимо леяут парамсы нужно тоже каждый раз новые к каждомо новому вью создавать
+                stoneLayoutParams = new RelativeLayout.LayoutParams(dpToPx(stoneSizeInDp), dpToPx(stoneSizeInDp));
 
-            stoneView.setLayoutParams(stoneLayoutParams);
-            boardLayout.addView(stoneView, -1);
+                if (color == 1) stoneView.setImageResource(activity.getResources().getIdentifier("territory_black", "drawable", activity.getPackageName()));
+                if (color == 2) stoneView.setImageResource(activity.getResources().getIdentifier("territory_white", "drawable", activity.getPackageName()));
+
+                stoneLayoutParams.leftMargin = territoryParts.get(i).get(j).x * dpToPx(cellSizeInDp) + (int) boardView.getX();
+                stoneLayoutParams.topMargin = territoryParts.get(i).get(j).y * dpToPx(cellSizeInDp) + (int) boardView.getY();
+
+                stoneView.setLayoutParams(stoneLayoutParams);
+                boardLayout.addView(stoneView, -1);
+                //добавлять в список выведенных объектов
+
+            }
         }
+
+
+
+
     }
 
 
